@@ -1,0 +1,60 @@
+{
+    "monsters": [
+        {
+            "name": "Slime",
+            "health": 30,
+            "damage": 8,
+            "exp": 20,
+            "description": "A basic gelatinous creature"
+        },
+        {
+            "name": "Goblin",
+            "health": 50,
+            "damage": 10,
+            "exp": 30,
+            "description": "A small but vicious creature"
+        },
+        {
+            "name": "Skeleton",
+            "health": 40,
+            "damage": 15,
+            "exp": 35,
+            "description": "An undead warrior"
+        },
+        {
+            "name": "Wolf",
+            "health": 60,
+            "damage": 12,
+            "exp": 40,
+            "description": "A fierce predator"
+        },
+        {
+            "name": "Ogre",
+            "health": 100,
+            "damage": 20,
+            "exp": 60,
+            "description": "A large and strong monster"
+        },
+        {
+            "name": "Dark Mage",
+            "health": 45,
+            "damage": 25,
+            "exp": 55,
+            "description": "A corrupted spellcaster"
+        },
+        {
+            "name": "Medusa",
+            "health": 70,
+            "damage": 27,
+            "exp": 65,
+            "description": "A snake-haired creature with petrifying gaze"
+        },
+        {
+            "name": "Minotaur",
+            "health": 120,
+            "damage": 22,
+            "exp": 70,
+            "description": "A powerful bull-headed warrior"
+        }
+    ]
+}
