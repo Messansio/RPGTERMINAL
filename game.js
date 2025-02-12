@@ -33,7 +33,7 @@ async function createCharacter() {
     }
     
     player.setName(name); // Add new method to set name
-
+    console.clear();
     console.log('\nAvailable classes:');
     console.log('1. Warrior - High strength and vitality');
     console.log('2. Mage - High intelligence and dexterity');
@@ -57,11 +57,9 @@ async function gameLoop(player) {
             console.log(`${player.name} has fallen in battle!`);
             console.log(`Final Level: ${player.level}`);
             console.log(`Experience gained: ${player.exp}`);
-            console.log('\nPress Enter to exit...');
+            console.log('\nPress Enter to continue...');
             await getText('');
-            isRunning = false;
-            exec('taskkill /F /FI "WINDOWTITLE eq RPG Terminal"');
-            break;
+            return false; // Return false to indicate game over
         }
 
         console.log('\n=== Game Menu ===');
@@ -79,16 +77,20 @@ async function gameLoop(player) {
         switch(choice) {
             case 1:
                 showStats(player);
+                console.log('\nPress Enter to continue...');
+                await getText('');  // Wait for user input
                 break;
             case 2:
-                checkExperience(player);
+                await checkExperience(player);
                 break;
             case 3:
                 if (!player.canLevelUp()) {
                     console.log('Not enough experience to level up!');
-                    break;
+                    console.log('\nPress Enter to continue...');
+                    await getText('');
+                } else {
+                    await levelUp(player);
                 }
-                await levelUp(player);
                 break;
             case 4:
                 const encounter = await exploreDungeon();
@@ -100,22 +102,33 @@ async function gameLoop(player) {
                 } else {
                     player.inventory.push(encounter.data);
                     console.log(`${encounter.data.name} added to inventory!`);
+                    console.log('\nPress Enter to continue...');
+                    await getText('');
                 }
                 break;
             case 5:
                 await showInventory(player);
                 break;
             case 6:
-                console.log('Thanks for playing!');
-                isRunning = false;
-                exec('taskkill /F /FI "WINDOWTITLE eq RPG Terminal"');
+                console.clear();
+                console.log('\n=== Warning ===');
+                console.log('Are you sure you want to quit?');
+                console.log('Your progress will not be saved!');
+                console.log('\n1. Yes');
+                console.log('2. No');
+                
+                const quitChoice = await getChoice(1, 2);
+                if (quitChoice === 1) {
+                    console.clear();
+                    console.log('\nReturning to main menu...');
+                    await new Promise(resolve => setTimeout(resolve, 1500)); // 1.5 second delay
+                    isRunning = false;
+                    return true;
+                }
                 break;
         }
-
-        if (choice !== 6) { // Don't wait if quitting
-            await new Promise(resolve => setTimeout(resolve, 2000)); // Give time to read output
-        }
     }
+    return true; // Return true for normal exit
 }
 
 async function exploreDungeon() {
@@ -141,10 +154,50 @@ async function exploreDungeon() {
     }
 }
 
+async function showStartMenu() {
+    let running = true;
+    while (running) {
+        console.clear();
+        console.log('\n=== RPG Terminal ===');
+        console.log('1. Start Game');
+        console.log('2. Quit');
+        
+        const choice = await getChoice(1, 2);
+        
+        switch(choice) {
+            case 1:
+                try {
+                    console.clear();
+                    const player = await createCharacter();
+                    await gameLoop(player);
+                    continue; // Always return to menu
+                } catch (error) {
+                    console.error('Game error:', error);
+                }
+                break;
+            case 2:
+                console.clear();
+                console.log('\n=== Warning ===');
+                console.log('Are you sure you want to quit?');
+                console.log('\n1. Yes');
+                console.log('2. No');
+                
+                const quitChoice = await getChoice(1, 2);
+                if (quitChoice === 1) {
+                    console.clear();
+                    console.log('Thanks for playing!');
+                    await new Promise(resolve => setTimeout(resolve, 1500)); // 1.5 second delay
+                    running = false;
+                    exec('taskkill /F /FI "WINDOWTITLE eq RPG Terminal"');
+                }
+                break;
+        }
+    }
+}
+
 async function startGame() {
     try {
-        const player = await createCharacter();
-        await gameLoop(player);
+        await showStartMenu();
     } catch (error) {
         console.error('Game error:', error);
     } finally {

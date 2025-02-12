@@ -6,7 +6,7 @@ const { getInput } = require('./utils/input');
 
 class Player {
     constructor() {
-        this.name = null; // Initialize as null
+        this.name = null; 
         this.class = null;
         this.level = 1;
         this.health = null;
@@ -15,9 +15,9 @@ class Player {
         this.vitality = null;
         this.strength = null;
         this.dexterity = null;
-        this.resistance = null;      // Physical resistance
-        this.magicResistance = null; // Magic resistance
-        this.faithResistance = null; // Faith/Holy resistance
+        this.resistance = null;      
+        this.magicResistance = null; 
+        this.faithResistance = null; 
         this.intelligence = null;
         this.faith = null;
         this.luck = null;
@@ -46,14 +46,11 @@ class Player {
         const CharacterClass = classes[className.toLowerCase()];
         const classInstance = new CharacterClass();
         
-        // Save name and class
         const playerName = this.name;
         const playerClass = className.toLowerCase();
         
-        // Copy class properties
         Object.assign(this, classInstance);
         
-        // Restore saved properties
         this.name = playerName;
         this.class = playerClass;
         
@@ -78,11 +75,9 @@ class Player {
 
         const actualDamage = Math.max(1, damage - (damage/100) * resistance);
         this.health = Math.max(0, this.health - actualDamage);
-        console.log(`${this.name || 'Player'} took ${actualDamage} ${type} damage! Health: ${this.health}/${this.maxHealth}`);
         
         if (this.health <= 0) {
-            console.log(`${this.name || 'Player'} has been defeated!`);
-            return true; // Indicates defeat
+            return true; 
         }
         return false;
     }
@@ -119,7 +114,7 @@ class Player {
 
     calculateDamage() {
         const baseDamage = this.strength;
-        const variation = Math.floor(Math.random() * 6) - 2; // -2 to +3
+        const variation = Math.floor(Math.random() * 6) - 2; 
         return Math.max(1, baseDamage + variation);
     }
 

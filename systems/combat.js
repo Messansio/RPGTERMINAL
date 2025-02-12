@@ -1,44 +1,55 @@
 const { getInput } = require('../utils/input');
 
 async function fight(player, monster) {
+    console.clear();
     console.log(`\n=== COMBAT: ${player.name} vs ${monster.name} ===`);
-    let monsterHealth = monster.health;
+    let monsterHealth = Math.floor(monster.health);
+    let lastCombatMessage = ''; // Initialize empty message
 
     while (monsterHealth > 0 && player.health > 0) {
-        // Display status
-        console.log(`\n${monster.name} HP: ${monsterHealth}`);
-        console.log(`Your HP: ${player.health}/${player.maxHealth}`);
+        // Display combat log and status
+        console.log(`\n${monster.name} HP: ${Math.floor(monsterHealth)}`);
+        console.log(`Your HP: ${Math.floor(player.health)}/${Math.floor(player.maxHealth)}`);
+        
+        // Always show last turn section, even if empty
+        console.log('\n=== Last Turn ===');
+        console.log(lastCombatMessage || 'Combat started!');
         
         // Combat menu
-        console.log('\n1. Attack');
+        console.log('\n=== Actions ===');
+        console.log('1. Attack');
         console.log('2. Use Item');
         
         const choice = await getInput('\nWhat will you do? (1-2): ');
+        console.clear();
 
         switch(choice) {
             case 1:
-                // Player attack
-                const playerDamage = calculateDamage(player.strength);
+                console.log(`\n=== COMBAT: ${player.name} vs ${monster.name} ===`);
+                const playerDamage = Math.floor(calculateDamage(player.strength));
                 monsterHealth -= playerDamage;
-                console.log(`\nYou dealt ${playerDamage} damage to ${monster.name}!`);
+                lastCombatMessage = `You dealt ${playerDamage} damage to ${monster.name}!\n`;
                 
-                // Monster attack if still alive
                 if (monsterHealth > 0) {
-                    const monsterDamage = monster.damage;
-                    // Check for dodge based on dexterity
+                    const monsterDamage = Math.floor(monster.damage);
                     if (Math.random() < player.dexterity * 0.01) {
-                        console.log('You dodged the attack!');
+                        lastCombatMessage += `You dodged the attack!`;
                     } else {
                         player.takeDamage(monsterDamage);
+                        lastCombatMessage += `${monster.name} dealt ${monsterDamage} damage to you!`;
                     }
                 }
+                console.clear();
                 break;
             case 2:
                 // Show and use inventory
                 await useInventoryItem(player);
+                console.clear();
                 break;
             default:
                 console.log('Invalid choice!');
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                console.clear();
         }
     }
 
@@ -78,8 +89,10 @@ function dropItem(player) {
 }
 
 async function useInventoryItem(player) {
+    console.clear();
     if (player.inventory.length === 0) {
         console.log('No items to use!');
+        await new Promise(resolve => setTimeout(resolve, 1000));
         return;
     }
 
@@ -89,9 +102,11 @@ async function useInventoryItem(player) {
     });
 
     const choice = await getInput('\nChoose item (0 to cancel): ');
+    console.clear();
     if (choice > 0 && choice <= player.inventory.length) {
         const item = player.inventory[choice - 1];
         useItem(player, item, choice - 1);
+        await new Promise(resolve => setTimeout(resolve, 1500)); // Give time to read result
     }
 }
 
@@ -99,7 +114,7 @@ function useItem(player, item, index) {
     switch(item.effect) {
         case 'heal':
             player.health = Math.min(player.maxHealth, player.health + item.value);
-            console.log(`Healed for ${item.value}! Health: ${player.health}/${player.maxHealth}`);
+            console.log(`Healed for ${Math.floor(item.value)}! Health: ${Math.floor(player.health)}/${Math.floor(player.maxHealth)}`);
             player.inventory.splice(index, 1);
             break;
         case 'defense':
