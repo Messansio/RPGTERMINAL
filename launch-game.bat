@@ -15,6 +15,17 @@ if not exist "%GAME_DIR%" (
 REM Change to game directory
 cd /d "%GAME_DIR%"
 
+REM Check for updates
+echo Checking for updates...
+git pull
+if errorlevel 1 (
+    echo Warning: Could not check for updates
+    timeout /t 3
+) else (
+    echo Update check complete
+    timeout /t 2
+)
+
 REM Launch game with admin rights
 powershell Start-Process cmd -ArgumentList '/k "cd /d "%GAME_DIR%" && title RPG Terminal && node game.js"' -Verb RunAs
 

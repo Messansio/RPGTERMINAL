@@ -44,7 +44,8 @@ async function gameLoop(player) {
     let isRunning = true;
 
     while (isRunning) {
-        // Check if player is dead
+        console.clear(); // Clear console before showing menu
+
         if (player.health <= 0) {
             console.log('\n=== GAME OVER ===');
             console.log(`${player.name} has fallen in battle!`);
@@ -64,6 +65,8 @@ async function gameLoop(player) {
         console.log('6. Quit');
 
         const choice = await getChoice(1, 6);
+
+        console.clear(); // Clear console after choice
 
         switch(choice) {
             case 1:
@@ -88,7 +91,7 @@ async function gameLoop(player) {
                     }
                 } else {
                     player.inventory.push(encounter.data);
-                    console.log('Item added to inventory!');
+                    console.log(`${encounter.data.name} added to inventory!`);
                 }
                 break;
             case 5:
@@ -99,6 +102,10 @@ async function gameLoop(player) {
                 isRunning = false;
                 exec('taskkill /F /FI "WINDOWTITLE eq RPG Terminal"');
                 break;
+        }
+
+        if (choice !== 6) { // Don't wait if quitting
+            await new Promise(resolve => setTimeout(resolve, 2000)); // Give time to read output
         }
     }
 }
@@ -120,6 +127,8 @@ async function exploreDungeon() {
     } else {
         const item = ITEMS[Math.floor(Math.random() * ITEMS.length)];
         console.log(`\nPath ${choice}: You found a ${item.name}!`);
+        console.log('Press Enter to continue...');
+        await getText('');  // Wait for user input
         return { type: 'item', data: item };
     }
 }
