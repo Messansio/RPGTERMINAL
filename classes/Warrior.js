@@ -6,7 +6,9 @@ class Warrior extends BaseClass {
         this.vitality = 15;
         this.strength = 14;
         this.dexterity = 11;
-        this.resistance = 10;
+        this.resistance = 12;      // High physical resistance
+        this.magicResistance = 8;  // Weak against magic
+        this.faithResistance = 10; // Average faith resistance
         this.intelligence = 9;
         this.faith = 9;
         this.luck = 7;

@@ -15,7 +15,9 @@ class Player {
         this.vitality = null;
         this.strength = null;
         this.dexterity = null;
-        this.resistance = null;
+        this.resistance = null;      // Physical resistance
+        this.magicResistance = null; // Magic resistance
+        this.faithResistance = null; // Faith/Holy resistance
         this.intelligence = null;
         this.faith = null;
         this.luck = null;
@@ -59,12 +61,24 @@ class Player {
         return true;
     }
 
-    takeDamage(damage) {
-        if (this.health <= 0) return; // Already defeated
-        
-        const actualDamage = Math.max(1, damage - (damage/100) * this.resistance);
+    takeDamage(damage, type = 'physical') {
+        if (this.health <= 0) return;
+
+        let resistance;
+        switch(type) {
+            case 'magic':
+                resistance = this.magicResistance;
+                break;
+            case 'faith':
+                resistance = this.faithResistance;
+                break;
+            default:
+                resistance = this.resistance;
+        }
+
+        const actualDamage = Math.max(1, damage - (damage/100) * resistance);
         this.health = Math.max(0, this.health - actualDamage);
-        console.log(`${this.name || 'Player'} took ${actualDamage} damage! Health: ${this.health}/${this.maxHealth}`);
+        console.log(`${this.name || 'Player'} took ${actualDamage} ${type} damage! Health: ${this.health}/${this.maxHealth}`);
         
         if (this.health <= 0) {
             console.log(`${this.name || 'Player'} has been defeated!`);

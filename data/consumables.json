@@ -1,52 +1,32 @@
 {
-    "items": [
+    "consumables": [
         {
             "name": "Small Health Potion",
+            "type": "consumable",
             "effect": "heal",
             "value": 30,
             "description": "Restores a small amount of health"
         },
         {
             "name": "Large Health Potion",
+            "type": "consumable",
             "effect": "heal",
             "value": 70,
             "description": "Restores a large amount of health"
         },
         {
-            "name": "Wooden Shield",
-            "effect": "defense",
-            "value": 5,
-            "description": "A basic shield made of wood"
-        },
-        {
-            "name": "Iron Shield",
-            "effect": "defense",
-            "value": 10,
-            "description": "A sturdy shield made of iron"
-        },
-        {
-            "name": "Steel Shield",
-            "effect": "defense",
-            "value": 15,
-            "description": "An excellent shield made of steel"
-        },
-        {
             "name": "Strength Potion",
+            "type": "consumable",
             "effect": "strength",
             "value": 5,
             "description": "Temporarily increases strength"
         },
         {
             "name": "Dexterity Potion",
+            "type": "consumable",
             "effect": "dexterity",
             "value": 5,
             "description": "Temporarily increases dexterity"
-        },
-        {
-            "name": "Lucky Charm",
-            "effect": "luck",
-            "value": 3,
-            "description": "Increases luck permanently"
         }
     ]
 }

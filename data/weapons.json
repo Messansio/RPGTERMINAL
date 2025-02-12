@@ -1,0 +1,25 @@
+{
+    "weapons": [
+        {
+            "name": "Iron Sword",
+            "type": "weapon",
+            "effect": "damage",
+            "value": 10,
+            "description": "A basic iron sword"
+        },
+        {
+            "name": "Magic Staff",
+            "type": "weapon",
+            "effect": "magicDamage",
+            "value": 15,
+            "description": "A staff that channels magical energy"
+        },
+        {
+            "name": "Holy Mace",
+            "type": "weapon",
+            "effect": "faithDamage",
+            "value": 12,
+            "description": "A mace blessed with holy power"
+        }
+    ]
+}

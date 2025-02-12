@@ -9,7 +9,13 @@ const path = require('path');
 
 // Load JSON data
 const MONSTERS = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'monsters.json'))).monsters;
-const ITEMS = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'items.json'))).items;
+const SHIELDS = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'shields.json'))).shields;
+const CONSUMABLES = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'consumables.json'))).consumables;
+const WEAPONS = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'weapons.json'))).weapons;
+const EQUIPPABLES = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'equippables.json'))).equippables;
+
+// Combine all items for random drops
+const ITEMS = [...SHIELDS, ...CONSUMABLES, ...WEAPONS, ...EQUIPPABLES];
 
 // Clear terminal on start
 console.clear();
@@ -51,6 +57,8 @@ async function gameLoop(player) {
             console.log(`${player.name} has fallen in battle!`);
             console.log(`Final Level: ${player.level}`);
             console.log(`Experience gained: ${player.exp}`);
+            console.log('\nPress Enter to exit...');
+            await getText('');
             isRunning = false;
             exec('taskkill /F /FI "WINDOWTITLE eq RPG Terminal"');
             break;

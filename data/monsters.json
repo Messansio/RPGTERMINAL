@@ -39,6 +39,7 @@
             "name": "Dark Mage",
             "health": 45,
             "damage": 25,
+            "damageType": "magic",
             "exp": 55,
             "description": "A corrupted spellcaster"
         },
@@ -55,6 +56,14 @@
             "damage": 22,
             "exp": 70,
             "description": "A powerful bull-headed warrior"
+        },
+        {
+            "name": "Holy Priest",
+            "health": 50,
+            "damage": 20,
+            "damageType": "faith",
+            "exp": 50,
+            "description": "A vengeful priest"
         }
     ]
 }
