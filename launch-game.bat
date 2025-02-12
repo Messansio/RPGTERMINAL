@@ -26,8 +26,8 @@ if errorlevel 1 (
     timeout /t 2
 )
 
-REM Launch game with admin rights
-powershell Start-Process cmd -ArgumentList '/k "cd /d "%GAME_DIR%" && title RPG Terminal && node game.js"' -Verb RunAs
+REM Launch game with admin rights in Windows Terminal
+powershell Start-Process wt -ArgumentList '-d "%GAME_DIR%" cmd /k "title RPG Terminal && node game.js"' -Verb RunAs
 
 REM Add pause to see any errors
 if errorlevel 1 (
