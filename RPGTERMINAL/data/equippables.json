@@ -1,0 +1,25 @@
+{
+    "equippables": [
+        {
+            "name": "Lucky Charm",
+            "type": "equippable",
+            "effect": "luck",
+            "value": 3,
+            "description": "Increases luck when equipped"
+        },
+        {
+            "name": "Magic Ring",
+            "type": "equippable",
+            "effect": "intelligence",
+            "value": 5,
+            "description": "Enhances magical abilities"
+        },
+        {
+            "name": "Holy Amulet",
+            "type": "equippable",
+            "effect": "faith",
+            "value": 5,
+            "description": "Strengthens faith-based abilities"
+        }
+    ]
+}
